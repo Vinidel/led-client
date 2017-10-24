@@ -1,16 +1,12 @@
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const prod = process.env.NODE_ENV == "production";
+const path = require('path');
 
-const entry = prod
-  ? ['./client/index.js']
-  : [
-    'webpack-dev-server/client?http://localhost:8080',
-    'webpack/hot/only-dev-server',
-    './client/index.js'
-  ];
+const entry = './client/index.js';
 
 module.exports = {
+  target: 'node',
   entry: entry,
   module: {
     loaders: [
@@ -32,13 +28,20 @@ module.exports = {
     extensions: ['.js', '.jsx']
   },
   output: {
-    path: __dirname + '/public/javascripts',
+    path: path.join(__dirname,'/public/javascripts'),
     publicPath: '/',
     filename: 'bundle.js'
   },
   devServer: {
     contentBase: './public',
-    hot: true
+    hot: true,
+    port: 8080,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000/api',
+        secure: false
+      }
+    }
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin()

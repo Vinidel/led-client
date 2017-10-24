@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const URL = 'https://s59jp649x3.execute-api.ap-southeast-2.amazonaws.com/dev/led';
+const URL = '/api/set-status';
 
 export function setState(state) {
   return {
