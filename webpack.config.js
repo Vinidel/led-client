@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
-const prod = process.env.NODE_ENV == "production";
+const prod = process.env.NODE_ENV == 'production';
 const path = require('path');
 
 const entry = './client/index.js';
@@ -11,24 +11,25 @@ module.exports = {
   module: {
     loaders: [
       {
-      test: /\.js?$/,
-      loader: 'babel-loader',
-      exclude: /node_modules/,
-      query: {
-        presets: ['es2015', 'react'],
-        plugins: ['transform-decorators-legacy']
+        test: /\.js?$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        query: {
+          presets: ['es2015', 'react'],
+          plugins: ['transform-decorators-legacy']
+        }
+      },
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader!postcss-loader'
       }
-    },
-    {
-      test: /\.css$/,
-      loader: 'style-loader!css-loader!postcss-loader'
-    }]
+    ]
   },
   resolve: {
     extensions: ['.js', '.jsx']
   },
   output: {
-    path: path.join(__dirname,'/public/javascripts'),
+    path: path.join(__dirname, '/public/javascripts'),
     publicPath: '/',
     filename: 'bundle.js'
   },
@@ -43,7 +44,5 @@ module.exports = {
       }
     }
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ]
+  plugins: [new webpack.HotModuleReplacementPlugin()]
 };

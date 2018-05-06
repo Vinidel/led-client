@@ -1,0 +1,38 @@
+{
+  "env": {
+    "browser": false,
+    "node": true,
+    "es6": true,
+    "mocha": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    },
+    "sourceType": "module"
+  },
+  "globals": {
+    "jest": true,
+    "expect": true,
+    "beforeAll": true,
+    "afterAll": true,
+    "testbot": true
+  },
+  "extends": ["prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "arrow-body-style": 0,
+    "no-unused-expressions": 0, //TODO: how do we disable this rule only for tests?
+    "max-nested-callbacks": 0,
+    "import/no-named-as-default": 0,
+    "prettier/prettier": ["error", {
+      "singleQuote": true,
+      "trailingComma": "none",
+      "bracketSpacing": false,
+      "jsxBracketSameLine": false
+    }],
+    "operator-linebreak": 0,
+    "no-cond-assign": 1
+  }
+}
