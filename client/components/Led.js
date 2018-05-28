@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {switchLed} from '../actionCreators'
+import {switchLed, fetchLedStatus} from '../actionCreators'
 
 export class Led extends Component {
   constructor() {
@@ -19,6 +19,10 @@ export class Led extends Component {
     }
   }
 
+  setLedStatus(status) {
+    this.props.dispatchSwitchLed(status);
+    // this.props.dispatchFetchLedStatus();
+  };
 
   render() {
     const {status, switchLed} = this.props;
@@ -28,10 +32,10 @@ export class Led extends Component {
           <div className="button-container">
             <div className="btn-group">
            <span className="action-button">
-            <button type="button" className="btn btn-primary btn-lg" onClick={() => switchLed('on')}>ON</button>
+            <button type="button" className="btn btn-primary btn-lg" onClick={() => this.setLedStatus('on')}>ON</button>
            </span>
               <span className="action-button">
-            <button type="button" className="btn btn-danger btn-lg" onClick={() => switchLed('off')}>OFF</button>
+            <button type="button" className="btn btn-danger btn-lg" onClick={() => this.setLedStatus('off')}>OFF</button>
            </span>
               {status}
             </div>
@@ -58,7 +62,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  switchLed
+  dispatchSwitchLed: switchLed,
+  dispatchFetchLedStatus: fetchLedStatus,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Led);

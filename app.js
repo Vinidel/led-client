@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const bunyan = require('bunyan');
 const bunyanMiddleware = require('bunyan-middleware');
-const {setLedStatus} = require('./server/api/ledService');
+const {setLedStatus, fetchLedStatus} = require('./server/api/ledService');
 const app = express();
 const logger = bunyan.createLogger({name: 'Led Server', level: 'info'});
 
@@ -35,7 +35,8 @@ app.use((req, res, next) => {
   return next();
 });
 
-app.post('/api/set-status', setLedStatus);
+app.post('/api/status', setLedStatus);
+app.get('/api/status', fetchLedStatus);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -21,6 +21,20 @@ function setLedStatus(req, res) {
   });
 }
 
+function fetchLedStatus(req, res) {
+  const init = {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    method: 'GET'
+  };
+
+  axios(URL, init).then(response => {
+    req.log.info('Service returned with', response.status, response.data);
+    res.status(200).json({status: response.data.status});
+  });
+}
 module.exports = {
-  setLedStatus
+  setLedStatus,
+  fetchLedStatus
 };

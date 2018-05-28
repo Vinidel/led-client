@@ -37,12 +37,15 @@ module.exports = {
     contentBase: './public',
     hot: true,
     port: 8080,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3000/api',
-        secure: false
+    // proxy: {
+    //   '/api': 'http://localhost:3000'
+    // }
+    proxy: [
+      {
+        path: `/api/*`,
+        target: 'http://localhost:3000'
       }
-    }
+    ]
   },
   plugins: [new webpack.HotModuleReplacementPlugin()]
 };

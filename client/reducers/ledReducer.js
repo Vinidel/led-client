@@ -23,19 +23,16 @@ export default function(state = initialState, action) {
         status: action.payload
       });
     case 'FETCH_SWITCH_STATUS_FULFILLED':
-      return Object.assign({}, state,
-        {
-          fetched: true,
-          fetching: false,
-          status: action.payload
-        });
+      return Object.assign({}, state, {
+        fetched: true,
+        fetching: false
+      });
     case 'FETCH_SWITCH_STATUS_REJECTED':
-      return Object.assign({}, state,
-        {
-          fetched: true,
-          fetching: false,
-          error: action.payload
-        });
+      return Object.assign({}, state, {
+        fetched: true,
+        fetching: false,
+        error: action.payload
+      });
     default:
       return state;
   }

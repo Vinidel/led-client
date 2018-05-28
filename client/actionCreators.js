@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const URL = '/api/set-status';
+const URL = '/api/status';
 
 export function setState(state) {
   return {
@@ -10,28 +10,47 @@ export function setState(state) {
 }
 
 export function switchLed(arg) {
-  return function(dispatch) {
+  return dispatch => {
     dispatch({
-      type: 'FETCH_SWITCH_STATUS_PENDING',
+      type: 'FETCH_SWITCH_STATUS_PENDING'
     });
 
-    return setLedStatus(arg)
-      .then(data => {
-        dispatch({
-          type: 'FETCH_SWITCH_STATUS_FULFILLED',
-          payload: arg
-        });
-      })
-  }
+    return setLedStatus(arg).then(data => {
+      dispatch({
+        type: 'FETCH_SWITCH_STATUS_FULFILLED',
+        payload: arg
+      });
+      return dispatch(fetchLedStatus());
+    });
+  };
 }
 
 export function fetchLedStatus() {
-  return axios.get(`${URL}?TableName=led`)
+  return dispatch => {
+    dispatch({
+      type: 'FETCH_STATUS_PENDING'
+    });
+
+    return fetchStatus().then(response => {
+      dispatch(fetchStatusSuccess(response.data.status));
+    });
+  };
+}
+
+export function fetchStatusSuccess(status) {
+  return {
+    type: 'FETCH_STATUS_FULFILLED',
+    payload: status
+  };
+}
+
+export function fetchStatus() {
+  return axios.get(`${URL}?TableName=led`);
 }
 
 export function setLedStatus(status) {
   const data = {
-    "status": status
+    status: status
   };
 
   const init = {
@@ -42,5 +61,7 @@ export function setLedStatus(status) {
     url: `${URL}`,
     data: JSON.stringify(data)
   };
-  return axios(`${URL}`, init)
+  return axios(`${URL}`, init);
 }
+
+const pollStartAction = () => ({type: 'POLL_START'});
